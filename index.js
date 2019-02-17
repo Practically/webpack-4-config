@@ -66,6 +66,7 @@ const initialize = (_config) => {
      */
     loaders.push({
         test: /\.(js|jsx|mjs)$/,
+        exclude: /(node_modules|bower_components)/,
         include: config.src_path,
         loader: 'babel-loader',
     });
@@ -95,9 +96,7 @@ const initialize = (_config) => {
             poll: true,
         },
         optimization: {
-            runtimeChunk: {
-                name: "manifest"
-            },
+            minimize: config.production,
             splitChunks: {
                 chunks: 'all',
                 name: 'vendor',
@@ -159,13 +158,13 @@ const typescript = () => {
     })
 
     webpackConfig.plugins.push(
-         new ForkTsCheckerWebpackPlugin({
+        new ForkTsCheckerWebpackPlugin({
             tsconfig: path.resolve(process.cwd(), './tsconfig.json'),
             tslist: path.resolve(process.cwd(), './tslint.json'),
             async: false,
             useTypescriptIncrementalApi: true,
             memoryLimit: 4096
-         })
+        })
     );
 
 }
