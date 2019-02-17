@@ -41,13 +41,18 @@ const loaders = [];
 /**
  * Css filename this get used more that once in the config
  */
-const cssFilename = config.production ? 'css/[name].[hash:8].css' : 'css/[name].css';
+let cssFilename = config.production ? 'css/[name].[chunkhash:8].css' : 'css/[name].css';
 
 const initialize = (_config) => {
     /**
      * Merge configs
      */
     config = Object.assign(baseOptions, _config);
+
+    /**
+     * Css filename this get used more that once in the config
+     */
+    cssFilename = config.production ? 'css/[name].[chunkhash:8].css' : 'css/[name].css';
 
     /**
      * Base loader for urls
