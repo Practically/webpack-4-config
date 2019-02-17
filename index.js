@@ -104,7 +104,7 @@ const initialize = (_config) => {
             },
         },
         resolve: {
-            extensions: ['.js', '.jsx', '.json', '.ts', '.tsx', '.css', '.scss'],
+            extensions: ['.js', '.jsx', '.json', '.ts', '.tsx', '.css', '.scss', '.less'],
             alias: {},
         },
         module: {
@@ -170,72 +170,81 @@ const typescript = () => {
 
 }
 
-const styles = ({scss} = {}) => {
+const styles = () => {
     const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-    const _loaders = [
-        {
-            loader: 'css-loader',
-            options: {
-                importLoaders: 1,
-                sourceMap: !config.production,
-            },
-        },
-        // {
-        //     loader: 'postcss-loader',
-        //     options: {
-        //         ident: 'postcss',
-        //         sourceMap: !PRODUCTION,
-        //         plugins: () => [
-        //             // require('postcss-flexbugs-fixes'),
-        //             autoprefixer({
-        //                 browsers: [
-        //                     '>1%',
-        //                     'last 4 versions',
-        //                     'Firefox ESR',
-        //                     'not ie < 9',
-        //                 ],
-        //                 flexbox: 'no-2009',
-        //             }),
-        //         ],
-        //     },
-        // },
-        //{
-        //},
-
-    ];
-
-    /**
-     * Add the scss loader if
-     */
-    if (scss) {
-        _loaders.push({
-            loader: 'sass-loader',
-            options: {
-                sourceMap: !config.production,
-            },
-        });
-    }
-
-    loaders.push({
-        test: /\.(s*)css$/,
-        loader: ExtractTextPlugin.extract(
-            Object.assign(
-                {
-                    fallback: {
-                        loader: 'style-loader',
-                        options: {
-                            hmr: false,
-                        },
-                    },
-                    use: _loaders,
+    const getLoader = ({test}) => {
+        const _loaders = [
+            {
+                loader: 'css-loader',
+                options: {
+                    sourceMap: !config.production,
                 },
-                {
-                    publicPath: Array(cssFilename.split('/').length).join('../')
+            },
+            // {
+            //     loader: 'postcss-loader',
+            //     options: {
+            //         ident: 'postcss',
+            //         sourceMap: !PRODUCTION,
+            //         plugins: () => [
+            //             // require('postcss-flexbugs-fixes'),
+            //             autoprefixer({
+            //                 browsers: [
+            //                     '>1%',
+            //                     'last 4 versions',
+            //                     'Firefox ESR',
+            //                     'not ie < 9',
+            //                 ],
+            //                 flexbox: 'no-2009',
+            //             }),
+            //         ],
+            //     },
+            // },
+            //{
+            //},
+
+        ];
+
+        if (test.test('.scss')) {
+            _loaders.push({
+                loader: 'sass-loader',
+                options: {
+                    sourceMap: !config.production,
+                },
+            });
+        } else if (test.test('.less')) {
+            _loaders.push({
+                loader: 'less-loader',
+                options: {
+                    sourceMap: !config.production,
                 }
-            )
-        ),
-    });
+            })
+        }
+
+        return {
+            test: test,
+            loader: ExtractTextPlugin.extract(
+                Object.assign(
+                    {
+                        fallback: {
+                            loader: 'style-loader',
+                            options: {
+                                hmr: false,
+                            },
+                        },
+                        use: _loaders,
+                    },
+                    {
+                        publicPath: Array(cssFilename.split('/').length).join('../')
+                    }
+                )
+            ),
+        };
+    };
+
+    loaders.push(getLoader({test: /\.css$/}));
+    loaders.push(getLoader({test: /\.scss$/}));
+    loaders.push(getLoader({test: /\.less$/}));
 
     webpackConfig.plugins.push(
         new ExtractTextPlugin({

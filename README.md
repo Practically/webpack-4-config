@@ -26,7 +26,7 @@ module.exports = c.build();
 For babel you can add a `.babelrc` to your project, and then you can add all of
 the packages you need and configure bebel per you project. Below you can add
 `babel-preset-env` to your `package.json` and add the preset to the env preset
-to `.babelrc` 
+to `.babelrc`
 
 ~~~ json
 // package.json
@@ -71,13 +71,13 @@ You will also need to add the style loader to your package.json
 
 ## SCSS
 
-For scss you can pass and object to the `styles` function.
+For scss make shore you have the called the styles function and the scss
+loader will have been added. You will also need to add some packages to your
+`package.json`
 
 ~~~ js
-c.styles({scss: true});
+c.styles();
 ~~~
-
-You will also need to add some packages to your `package.json`
 
 ~~~ json
 // package.json
@@ -88,6 +88,25 @@ You will also need to add some packages to your `package.json`
     "sass-loader": "^7.1.0"
 },
 ...
+~~~
+
+## LESS
+
+For less make shore you have the called the styles function and the less
+loader will have been added. You will also need to add some packages to your
+`package.json`
+
+~~~ js
+c.styles();
+~~~
+
+~~~ json
+// package.json
+"dependencies": {
+    "css-loader": "^2.1.0",
+    "less": "^3.9.0",
+    "less-loader": "^4.1.0",
+},
 ~~~
 
 ## Typescript
@@ -116,7 +135,7 @@ c.typescript();
 ## Html
 
 With the html webpack plugin you can create a SPA and add inject all of you
-chunked scripts into the html. 
+chunked scripts into the html.
 
 ~~~ js
 // webpack.config.js
@@ -131,4 +150,3 @@ c.html('path/to/index.html');
 }
 ...
 ~~~
-
