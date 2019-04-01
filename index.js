@@ -2,6 +2,9 @@
  * Base imports
  */
 const ManifestPlugin = require('webpack-manifest-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+
 const path = require('path');
 
 /**
@@ -111,6 +114,41 @@ const initialize = _config => {
         },
         optimization: {
             minimize: config.production,
+            minimizer: [
+                new TerserPlugin({
+                    terserOptions: {
+                        parse: {
+                            ecma: 8
+                        },
+                        compress: {
+                            ecma: 5,
+                            warnings: false,
+                            comparisons: false,
+                            inline: 2
+                        },
+                        mangle: {
+                            safari10: true
+                        },
+                        output: {
+                            ecma: 5,
+                            comments: false,
+                            ascii_only: true
+                        }
+                    },
+                    parallel: true,
+                    cache: true,
+                    sourceMap: false
+                }),
+                new OptimizeCSSAssetsPlugin({
+                    cssProcessor: require('cssnano'),
+                    cssProcessorPluginOptions: {
+                        preset: [
+                            'default',
+                            {discardComments: {removeAll: true}}
+                        ]
+                    }
+                })
+            ],
             splitChunks: {
                 chunks: 'all',
                 name: false
