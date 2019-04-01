@@ -113,7 +113,7 @@ const initialize = _config => {
             minimize: config.production,
             splitChunks: {
                 chunks: 'all',
-                name: 'vendor'
+                name: false
             }
         },
         resolve: {
