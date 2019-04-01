@@ -1,4 +1,3 @@
-
 /**
  * Base imports
  */
@@ -41,9 +40,11 @@ const loaders = [];
 /**
  * Css filename this get used more that once in the config
  */
-let cssFilename = config.production ? 'css/[name].[chunkhash:8].css' : 'css/[name].css';
+let cssFilename = config.production
+    ? 'css/[name].[chunkhash:8].css'
+    : 'css/[name].css';
 
-const initialize = (_config) => {
+const initialize = _config => {
     /**
      * Merge configs
      */
@@ -52,7 +53,9 @@ const initialize = (_config) => {
     /**
      * Css filename this get used more that once in the config
      */
-    cssFilename = config.production ? 'css/[name].[chunkhash:8].css' : 'css/[name].css';
+    cssFilename = config.production
+        ? 'css/[name].[chunkhash:8].css'
+        : 'css/[name].css';
 
     /**
      * Base loader for urls
@@ -62,8 +65,10 @@ const initialize = (_config) => {
         loader: 'url-loader',
         options: {
             limit: 10000,
-            name: config.production ? 'media/[name].[hash:8].[ext]' : 'media/[name].[ext]',
-        },
+            name: config.production
+                ? 'media/[name].[hash:8].[ext]'
+                : 'media/[name].[ext]'
+        }
     });
 
     /**
@@ -73,7 +78,7 @@ const initialize = (_config) => {
         test: /\.(js|jsx|mjs)$/,
         exclude: /(node_modules|bower_components)/,
         include: config.src_path,
-        loader: 'babel-loader',
+        loader: 'babel-loader'
     });
 
     /**
@@ -86,30 +91,43 @@ const initialize = (_config) => {
         entry: config.entry_point,
         output: {
             path: config.dest_path,
-            filename: config.production ? 'js/[name].[chunkhash:8].js' : 'js/[name].js',
-            chunkFilename: config.production ? 'js/[name].[chunkhash:8].chunk.js' : 'js/[name].chunk.js',
+            filename: config.production
+                ? 'js/[name].[chunkhash:8].js'
+                : 'js/[name].js',
+            chunkFilename: config.production
+                ? 'js/[name].[chunkhash:8].chunk.js'
+                : 'js/[name].chunk.js',
             publicPath: config.public_path,
             devtoolModuleFilenameTemplate: info =>
                 path
                     .relative(config.src_path, info.absoluteResourcePath)
-                    .replace(/\\/g, '/'),
+                    .replace(/\\/g, '/')
         },
         devtool: !config.production ? 'source-map' : false,
         devServer: config.devServer,
         watchOptions: {
             ignored: /node_modules/,
-            poll: true,
+            poll: true
         },
         optimization: {
             minimize: config.production,
             splitChunks: {
                 chunks: 'all',
-                name: 'vendor',
-            },
+                name: 'vendor'
+            }
         },
         resolve: {
-            extensions: ['.js', '.jsx', '.json', '.ts', '.tsx', '.css', '.scss', '.less'],
-            alias: {},
+            extensions: [
+                '.js',
+                '.jsx',
+                '.json',
+                '.ts',
+                '.tsx',
+                '.css',
+                '.scss',
+                '.less'
+            ],
+            alias: {}
         },
         module: {
             strictExportPresence: true,
@@ -118,28 +136,28 @@ const initialize = (_config) => {
                     test: /\.(js|jsx|mjs)$/,
                     loader: require.resolve('source-map-loader'),
                     enforce: 'pre',
-                    include: config.src_path,
+                    include: config.src_path
                 }
             ]
         },
         plugins: [
             new ManifestPlugin({
-                fileName: 'asset-manifest.json',
+                fileName: 'asset-manifest.json'
             }),
             new ManifestPlugin({
                 fileName: 'asset-manifest-required.json',
                 filter(file) {
                     return file.isInitial;
                 }
-            }),
+            })
         ],
         node: {
             dgram: 'empty',
             fs: 'empty',
             net: 'empty',
             tls: 'empty',
-            child_process: 'empty',
-        },
+            child_process: 'empty'
+        }
     };
 };
 
@@ -151,16 +169,16 @@ const typescript = () => {
         include: config.src_path,
         use: [
             {
-                loader: 'babel-loader',
+                loader: 'babel-loader'
             },
             {
                 loader: 'ts-loader',
                 options: {
-                    transpileOnly: true,
-                },
-            },
-        ],
-    })
+                    transpileOnly: true
+                }
+            }
+        ]
+    });
 
     webpackConfig.plugins.push(
         new ForkTsCheckerWebpackPlugin({
@@ -171,8 +189,7 @@ const typescript = () => {
             memoryLimit: 4096
         })
     );
-
-}
+};
 
 const styles = () => {
     const ExtractTextPlugin = require('extract-text-webpack-plugin');
@@ -182,9 +199,9 @@ const styles = () => {
             {
                 loader: 'css-loader',
                 options: {
-                    sourceMap: !config.production,
-                },
-            },
+                    sourceMap: !config.production
+                }
+            }
             // {
             //     loader: 'postcss-loader',
             //     options: {
@@ -206,23 +223,22 @@ const styles = () => {
             // },
             //{
             //},
-
         ];
 
         if (test.test('.scss')) {
             _loaders.push({
                 loader: 'sass-loader',
                 options: {
-                    sourceMap: !config.production,
-                },
+                    sourceMap: !config.production
+                }
             });
         } else if (test.test('.less')) {
             _loaders.push({
                 loader: 'less-loader',
                 options: {
-                    sourceMap: !config.production,
+                    sourceMap: !config.production
                 }
-            })
+            });
         }
 
         return {
@@ -233,16 +249,18 @@ const styles = () => {
                         fallback: {
                             loader: 'style-loader',
                             options: {
-                                hmr: false,
-                            },
+                                hmr: false
+                            }
                         },
-                        use: _loaders,
+                        use: _loaders
                     },
                     {
-                        publicPath: Array(cssFilename.split('/').length).join('../')
+                        publicPath: Array(cssFilename.split('/').length).join(
+                            '../'
+                        )
                     }
                 )
-            ),
+            )
         };
     };
 
@@ -252,12 +270,12 @@ const styles = () => {
 
     webpackConfig.plugins.push(
         new ExtractTextPlugin({
-            filename: cssFilename,
+            filename: cssFilename
         })
     );
 };
 
-const html = (template) => {
+const html = template => {
     const HtmlWebpackPlugin = require('html-webpack-plugin');
 
     let pluginOptions = {
@@ -276,12 +294,12 @@ const html = (template) => {
             keepClosingSlash: true,
             minifyJS: true,
             minifyCSS: true,
-            minifyURLs: true,
+            minifyURLs: true
         };
     }
 
     webpackConfig.plugins.push(new HtmlWebpackPlugin(pluginOptions));
-}
+};
 
 const build = () => {
     /**
@@ -292,8 +310,8 @@ const build = () => {
         loader: require.resolve('file-loader'),
         exclude: [/\.(js|jsx|mjs)$/, /\.html$/, /\.json$/],
         options: {
-            name: 'media/[name].[hash:8].[ext]',
-        },
+            name: 'media/[name].[hash:8].[ext]'
+        }
     });
 
     /**
@@ -310,5 +328,5 @@ module.exports = {
     initialize,
     styles,
     typescript,
-    html,
+    html
 };
