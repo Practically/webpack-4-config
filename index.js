@@ -192,37 +192,34 @@ const typescript = () => {
 };
 
 const styles = () => {
-    const ExtractTextPlugin = require('extract-text-webpack-plugin');
+    const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
     const getLoader = ({test}) => {
         const _loaders = [
+            MiniCssExtractPlugin.loader,
             {
                 loader: 'css-loader',
                 options: {
                     sourceMap: !config.production
                 }
+            },
+            {
+                loader: 'postcss-loader',
+                options: {
+                    ident: 'postcss',
+                    sourceMap: !config.production,
+                    plugins: () => [
+                        require('postcss-flexbugs-fixes'),
+                        require('css-mqpacker'),
+                        require('postcss-preset-env')({
+                            autoprefixer: {
+                                flexbox: 'no-2009'
+                            },
+                            stage: 3
+                        })
+                    ]
+                }
             }
-            // {
-            //     loader: 'postcss-loader',
-            //     options: {
-            //         ident: 'postcss',
-            //         sourceMap: !PRODUCTION,
-            //         plugins: () => [
-            //             // require('postcss-flexbugs-fixes'),
-            //             autoprefixer({
-            //                 browsers: [
-            //                     '>1%',
-            //                     'last 4 versions',
-            //                     'Firefox ESR',
-            //                     'not ie < 9',
-            //                 ],
-            //                 flexbox: 'no-2009',
-            //             }),
-            //         ],
-            //     },
-            // },
-            //{
-            //},
         ];
 
         if (test.test('.scss')) {
@@ -243,24 +240,7 @@ const styles = () => {
 
         return {
             test: test,
-            loader: ExtractTextPlugin.extract(
-                Object.assign(
-                    {
-                        fallback: {
-                            loader: 'style-loader',
-                            options: {
-                                hmr: false
-                            }
-                        },
-                        use: _loaders
-                    },
-                    {
-                        publicPath: Array(cssFilename.split('/').length).join(
-                            '../'
-                        )
-                    }
-                )
-            )
+            use: _loaders
         };
     };
 
@@ -269,7 +249,7 @@ const styles = () => {
     loaders.push(getLoader({test: /\.less$/}));
 
     webpackConfig.plugins.push(
-        new ExtractTextPlugin({
+        new MiniCssExtractPlugin({
             filename: cssFilename
         })
     );
