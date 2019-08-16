@@ -1,0 +1,31 @@
+---
+kind: pipeline
+name: node8
+
+steps:
+    - name: test
+      image: node:8
+      commands:
+          - yarn install
+          - npx jest
+
+---
+kind: pipeline
+name: node10
+
+steps:
+    - name: test
+      image: node:10
+      commands:
+          - yarn install
+          - npx jest
+---
+kind: pipeline
+name: node12
+
+steps:
+    - name: test
+      image: node:12
+      commands:
+          - yarn install
+          - npx jest
