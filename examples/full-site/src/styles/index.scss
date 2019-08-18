@@ -1,0 +1,25 @@
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.main {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    font-family: sans-serif;
+    height: 98vh;
+    justify-content: center;
+    width: 100%;
+
+    .rotate {
+        animation-name: rotate;
+        animation-duration: 2s;
+        animation-iteration-count: infinite;
+        animation-timing-function: linear;
+    }
+}
