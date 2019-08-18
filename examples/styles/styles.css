@@ -1,0 +1,6 @@
+.css-class {
+    font-family: 'css-font';
+    background-color: red;
+
+    user-select: none;
+}
