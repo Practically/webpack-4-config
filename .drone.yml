@@ -7,6 +7,7 @@ steps:
       image: node:8
       commands:
           - yarn install
+          - yarn audit --level moderate
           - npx jest
 
 ---
@@ -18,6 +19,7 @@ steps:
       image: node:10
       commands:
           - yarn install
+          - yarn audit --level moderate
           - npx jest
 ---
 kind: pipeline
@@ -28,4 +30,5 @@ steps:
       image: node:12
       commands:
           - yarn install
+          - yarn audit --level moderate
           - npx jest
