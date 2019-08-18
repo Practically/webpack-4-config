@@ -1,31 +1,32 @@
 {
-  "name": "practically-webpack-4-config",
-  "version": "1.0.2",
-  "description": "Base webpack 4 config",
-  "main": "index.js",
-  "author": "Ade Attwood",
-  "license": "MIT",
-  "private": true,
-  "dependencies": {
-    "babel-loader": "^8.0.5",
-    "css-mqpacker": "^7.0.0",
-    "extract-text-webpack-plugin": "^4.0.0-beta.0",
-    "react-scripts": "^2.1.8",
-    "source-map-loader": "^0.2.4",
-    "terser-webpack-plugin": "^1.2.3",
-    "webpack-cli": "^3.3.0"
-  },
-  "optionalDependencies": {
-    "css-loader": "^2.1.0",
-    "fork-ts-checker-webpack-plugin": "^0.5.2",
-    "html-webpack-plugin": "^3.2.0",
-    "less-loader": "^4.1.0",
-    "less": "^3.9.0",
-    "node-sass": "^4.11.0",
-    "sass-loader": "^7.1.0",
-    "style-loader": "^0.23.1",
-    "ts-loader": "^5.3.3",
-    "tslint": "^5.12.1",
-    "typescript": "^3.2.4"
-  }
+    "name": "practically-webpack-4-config",
+    "version": "1.0.2",
+    "description": "Base webpack 4 config",
+    "main": "index.js",
+    "author": "Ade Attwood",
+    "license": "MIT",
+    "private": true,
+    "dependencies": {
+        "babel-loader": "^8.0.5",
+        "css-mqpacker": "^7.0.0",
+        "extract-text-webpack-plugin": "^4.0.0-beta.0",
+        "react-scripts": "^3.1.1",
+        "source-map-loader": "^0.2.4",
+        "terser-webpack-plugin": "^1.2.3",
+        "webpack-cli": "^3.3.7",
+        "webpack-dev-server": "^3.8.0"
+    },
+    "optionalDependencies": {
+        "css-loader": "^2.1.0",
+        "fork-ts-checker-webpack-plugin": "^0.5.2",
+        "html-webpack-plugin": "^3.2.0",
+        "less": "^3.10.1",
+        "less-loader": "^5.0.0",
+        "node-sass": "^4.11.0",
+        "sass-loader": "^7.1.0",
+        "style-loader": "^0.23.1",
+        "ts-loader": "^5.3.3",
+        "tslint": "^5.12.1",
+        "typescript": "^3.2.4"
+    }
 }
