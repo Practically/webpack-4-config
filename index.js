@@ -49,6 +49,11 @@ let cssFilename = config.production
 
 const initialize = _config => {
     /**
+     * Reset the loaders when you initialize so we don't add previous loads to
+     * the new config
+     */
+    loaders.length = 0;
+    /**
      * Merge configs
      */
     config = Object.assign(baseOptions, _config);
@@ -321,10 +326,14 @@ const html = template => {
 
 const build = () => {
     /**
-     * Add the last loader as a catch all
+     * Clone the webpackConfig object
      */
-    const _loaders = loaders;
-    _loaders.push({
+    const _config = Object.assign({}, webpackConfig);
+
+    /**
+     * Add all the loader into a `oneOf` loader
+     */
+    loaders.push({
         loader: require.resolve('file-loader'),
         exclude: [/\.(js|jsx|mjs)$/, /\.html$/, /\.json$/],
         options: {
@@ -333,10 +342,9 @@ const build = () => {
     });
 
     /**
-     * Add all the loader into a `oneOf` loader
+     * Add the last loader as a catch all
      */
-    const _config = webpackConfig;
-    _config.module.rules.push({oneOf: _loaders});
+    _config.module.rules.push({oneOf: loaders.slice(0)});
 
     return _config;
 };

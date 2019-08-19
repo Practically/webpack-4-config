@@ -3,8 +3,22 @@
     "version": "1.0.2",
     "description": "Base webpack 4 config",
     "main": "index.js",
-    "author": "Ade Attwood",
-    "license": "MIT",
+    "author": {
+        "name": "Ade Attwood",
+        "email": "ade@practically.io",
+        "url": "https://practically.io"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://stash.arobaze.co.uk/projects/AINT/repos/practically-webpack-4-config"
+    },
+    "bugs": {
+        "url": "https://track.arobaze.co.uk",
+        "email": "ade@practically.io"
+    },
+    "scripts": {
+        "changelog": "ls"
+    },
     "private": true,
     "dependencies": {
         "babel-loader": "^8.0.5",
