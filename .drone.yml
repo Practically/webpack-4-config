@@ -7,7 +7,6 @@ steps:
       image: node:8
       commands:
           - yarn install
-          - yarn audit --level moderate
           - npx jest
 
 ---
