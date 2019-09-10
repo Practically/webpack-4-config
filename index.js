@@ -4,8 +4,20 @@
 const ManifestPlugin = require('webpack-manifest-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 
 const path = require('path');
+
+/**
+ * Const to define if `webpack-dev-server` has been run
+ */
+const isServer =
+    process.argv[1] && process.argv[1].includes('webpack-dev-server');
+
+/**
+ * Const to define if webpack is run with the watch flag
+ */
+const isWatch = process.argv.findIndex(i => i === '--watch') >= 0;
 
 /**
  * Build base options
@@ -19,7 +31,8 @@ const baseOptions = {
         contentBase: path.join(process.cwd(), 'public'),
         historyApiFallback: true,
         compress: true,
-        port: 9000
+        port: 9000,
+        quiet: true
     }
 };
 
@@ -39,6 +52,11 @@ let webpackConfig = {};
  * Global variable for the loaders as they will end up in a `oneOf` options
  */
 const loaders = [];
+
+/**
+ * The messages to be displayed when running webpack
+ */
+const messages = [];
 
 /**
  * Css filename this get used more that once in the config
@@ -97,6 +115,7 @@ const initialize = _config => {
         bail: true,
         context: config.src_path,
         entry: config.entry_point,
+        stats: !isWatch,
         output: {
             path: config.dest_path,
             filename: config.production
@@ -202,6 +221,12 @@ const initialize = _config => {
             child_process: 'empty'
         }
     };
+
+    if (isServer) {
+        messages.push(
+            `Your server is running on http://localhost:${config.devServer.port}`
+        );
+    }
 };
 
 const typescript = () => {
@@ -340,6 +365,12 @@ const build = () => {
             name: 'media/[name].[hash:8].[ext]'
         }
     });
+
+    _config.plugins.push(
+        new FriendlyErrorsWebpackPlugin({
+            compilationSuccessInfo: {messages}
+        })
+    );
 
     /**
      * Add the last loader as a catch all

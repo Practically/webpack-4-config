@@ -24,6 +24,7 @@
         "babel-loader": "^8.0.5",
         "css-mqpacker": "^7.0.0",
         "extract-text-webpack-plugin": "^4.0.0-beta.0",
+        "friendly-errors-webpack-plugin": "^1.7.0",
         "react-scripts": "^3.1.1",
         "source-map-loader": "^0.2.4",
         "terser-webpack-plugin": "^1.2.3",
