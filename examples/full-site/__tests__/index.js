@@ -6,6 +6,7 @@ const {spawnSync, spawn} = require('child_process');
 const parentDir = path.dirname(__dirname);
 
 beforeEach(() => {
+    jest.setTimeout(10000);
     process.chdir(parentDir);
 });
 
