@@ -6,7 +6,7 @@
 ## Installation
 
 ```js
-yarn add practically-webpack-4-config
+yarn add @practically/webpack-4-config
 ```
 
 ## Usage
@@ -16,7 +16,7 @@ contents. The `initialize` function must be the first function you call and
 `build` must the last.
 
 ```js
-const c = require('practically-webpack-4-config');
+const c = require('@practically/webpack-4-config');
 
 c.initialize();
 
@@ -54,7 +54,7 @@ To use css you can call the `styles` function. Note this has to be called after
 `initialize`
 
 ```js
-const c = require('practically-webpack-4-config');
+const c = require('@practically/webpack-4-config');
 
 c.initialize();
 c.styles();
@@ -111,7 +111,7 @@ you can put into your `package.json`.
 
 ```json
 "scripts": {
-    "start": "NODE_ENV=development webpack-dev-server",
+    "start": "NODE_ENV=development webpack s",
     "watch": "NODE_ENV=development webpack --watch",
     "dev": "NODE_ENV=development webpack",
     "development": "NODE_ENV=development webpack",
@@ -145,7 +145,7 @@ can merge your defined config with the one generated but this package.
 ```js
 const path = require('path');
 const merge = require('webpack-merge');
-const c = require('practically-webpack-4-config');
+const c = require('@practically/webpack-4-config');
 
 c.initialize();
 
