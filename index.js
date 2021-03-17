@@ -1,7 +1,7 @@
 /**
  * Base imports
  */
-const ManifestPlugin = require('webpack-manifest-plugin');
+const {WebpackManifestPlugin} = require('webpack-manifest-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
@@ -12,7 +12,7 @@ const path = require('path');
  * Const to define if `webpack-dev-server` has been run
  */
 const isServer =
-    process.argv[1] && process.argv[1].includes('webpack-dev-server');
+    process.argv[2] && (process.argv[2] === 's' || process.argv[2] === 'serve');
 
 /**
  * Const to define if webpack is run with the watch flag
@@ -203,10 +203,10 @@ const initialize = _config => {
             ]
         },
         plugins: [
-            new ManifestPlugin({
+            new WebpackManifestPlugin({
                 fileName: 'asset-manifest.json'
             }),
-            new ManifestPlugin({
+            new WebpackManifestPlugin({
                 fileName: 'asset-manifest-required.json',
                 filter(file) {
                     return file.isInitial;
@@ -250,11 +250,9 @@ const typescript = () => {
 
     webpackConfig.plugins.push(
         new ForkTsCheckerWebpackPlugin({
-            tsconfig: path.resolve(process.cwd(), './tsconfig.json'),
-            tslist: path.resolve(process.cwd(), './tslint.json'),
-            async: false,
-            useTypescriptIncrementalApi: true,
-            memoryLimit: 4096
+            typescript: {
+                configFile: path.resolve(process.cwd(), './tsconfig.json'),
+            }
         })
     );
 };

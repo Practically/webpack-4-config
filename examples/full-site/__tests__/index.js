@@ -46,12 +46,12 @@ test('Test the webpack dev server runs', async () => {
         path.dirname(path.dirname(parentDir)),
         'node_modules',
         '.bin',
-        'webpack-dev-server'
+        'webpack-cli'
     );
 
     const startServer = function() {
         return new Promise((reslove, reject) => {
-            const server = spawn(exe);
+            const server = spawn(exe, ['s']);
 
             server.stdout.on('data', data => {
                 if (/Compiled successfully./.test(data)) {
