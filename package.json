@@ -17,7 +17,7 @@
         "email": "ade@practically.io"
     },
     "scripts": {
-        "changelog": "ls"
+        "test": "jest"
     },
     "private": true,
     "dependencies": {
