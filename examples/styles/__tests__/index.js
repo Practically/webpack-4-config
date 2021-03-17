@@ -14,7 +14,14 @@ afterEach(() => {
 });
 
 test('Test the webpack run successfully', () => {
-    const command = spawnSync('webpack');
+    const exe = path.resolve(
+        path.dirname(path.dirname(parentDir)),
+        'node_modules',
+        '.bin',
+        'webpack-cli'
+    );
+
+    const command = spawnSync(exe);
     expect(command.error).toBeUndefined();
 
     const jsContent = fs

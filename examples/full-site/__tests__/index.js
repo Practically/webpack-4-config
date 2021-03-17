@@ -15,7 +15,14 @@ afterEach(() => {
 });
 
 test('Test the webpack run successfully', () => {
-    const command = spawnSync('webpack');
+    const exe = path.resolve(
+        path.dirname(path.dirname(parentDir)),
+        'node_modules',
+        '.bin',
+        'webpack-cli'
+    );
+
+    const command = spawnSync(exe);
     expect(command.error).toBeUndefined();
 
     const jsContent = fs
@@ -35,9 +42,16 @@ test('Test the webpack run successfully', () => {
 });
 
 test('Test the webpack dev server runs', async () => {
+    const exe = path.resolve(
+        path.dirname(path.dirname(parentDir)),
+        'node_modules',
+        '.bin',
+        'webpack-dev-server'
+    );
+
     const startServer = function() {
         return new Promise((reslove, reject) => {
-            const server = spawn('webpack-dev-server');
+            const server = spawn(exe);
 
             server.stdout.on('data', data => {
                 if (/Compiled successfully./.test(data)) {
