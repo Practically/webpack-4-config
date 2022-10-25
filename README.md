@@ -1,3 +1,8 @@
+# :warning: This project has been deprecated
+
+Continued development is being carried out on
+[practically/webpack-config](https://github.com/Practically/webpack-config).
+
 <div align="center">
     <h1>Practically Webpack 4 Config</h1>
     <p><strong>An abstraction api for generating webpack configurations.</strong></p>
